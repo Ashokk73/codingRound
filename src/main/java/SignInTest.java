@@ -12,29 +12,29 @@ import com.sun.jna.Platform;
 
 public class SignInTest {
 	
-	@Test
+    @Test
     public void shouldThrowAnErrorIfSignInDetailsAreMissing() throws InterruptedException {
-    	setDriverPath();
-    	WebDriver driver = new ChromeDriver();
-    	driver.manage().window().maximize();
-        driver.get("https://www.cleartrip.com/");
-        waitFor(2000);
+    setDriverPath();
+    WebDriver driver = new ChromeDriver();
+    driver.manage().window().maximize();
+    driver.get("https://www.cleartrip.com/");
+    waitFor(2000);
 
-        driver.get("https://www.cleartrip.com/");
-		driver.findElement(By.linkText("Your trips")).click();
-	    driver.findElement(By.id("SignIn")).click();
-	    Thread.sleep(3000);
+    driver.get("https://www.cleartrip.com/");
+    driver.findElement(By.linkText("Your trips")).click();
+    driver.findElement(By.id("SignIn")).click()
+    Thread.sleep(3000);
 	    
-	    WebElement iframeSwitch = driver.findElement(By.id("modal_window"));
-		driver.switchTo().frame(iframeSwitch);
-		Thread.sleep(5000);
-		System.out.println("Switched");
-		WebElement signElement = driver.findElement(By.id("signInButton"));
-		signElement.click();
-		Thread.sleep(5000);
-		String errors1 = driver.findElement(By.id("errors1")).getText();
-        Assert.assertTrue(errors1.contains("There were errors in your submission"));
-        driver.quit();
+    WebElement iframeSwitch = driver.findElement(By.id("modal_window"));
+    driver.switchTo().frame(iframeSwitch);
+    Thread.sleep(5000);
+    System.out.println("Switched");
+    WebElement signElement = driver.findElement(By.id("signInButton"));
+    signElement.click();
+    Thread.sleep(5000);
+    String errors1 = driver.findElement(By.id("errors1")).getText();
+    Assert.assertTrue(errors1.contains("There were errors in your submission"));
+    driver.quit();
     }
 
     private void waitFor(int durationInMilliSeconds) {
