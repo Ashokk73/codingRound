@@ -14,30 +14,34 @@ public class FlightBookingTest {
 
     static WebDriver driver;
 
+
     @Test
-    public void testThatResultsAppearForAOneWayJourney() {
+    public void testThatResultsAppearForAOneWayJourney() throws InterruptedException {
 
         setDriverPath();
-        driver = new ChromeDriver();
-        driver.get("https://www.cleartrip.com/");
-        waitFor(2000);
-        driver.findElement(By.id("OneWay")).click();
+    	driver = new ChromeDriver();
+    	driver.manage().window().maximize();
+    	driver.get("https://www.cleartrip.com/");
+        Thread.sleep(2000);
+        
+        driver.findElement(By.xpath(".//*[@id='Home']/div/div/ul/li/div/div[2]/aside[1]/nav/ul[1]/li[1]/a[1]")).click();
+        //driver.findElement(By.id("OneWay")).click();
 
         driver.findElement(By.id("FromTag")).clear();
         driver.findElement(By.id("FromTag")).sendKeys("Bangalore");
 
         //wait for the auto complete options to appear for the origin
 
-        waitFor(2000);
+        Thread.sleep(2000);
         List<WebElement> originOptions = driver.findElement(By.id("ui-id-1")).findElements(By.tagName("li"));
         originOptions.get(0).click();
 
-        driver.findElement(By.id("toTag")).clear();
-        driver.findElement(By.id("toTag")).sendKeys("Delhi");
+        driver.findElement(By.id("ToTag")).clear();
+        driver.findElement(By.id("ToTag")).sendKeys("Delhi");
 
         //wait for the auto complete options to appear for the destination
 
-        waitFor(2000);
+        Thread.sleep(2000);
         //select the first item from the destination auto complete list
         List<WebElement> destinationOptions = driver.findElement(By.id("ui-id-2")).findElements(By.tagName("li"));
         destinationOptions.get(0).click();
@@ -46,8 +50,7 @@ public class FlightBookingTest {
 
         //all fields filled in. Now click on search
         driver.findElement(By.id("SearchBtn")).click();
-
-        waitFor(5000);
+        Thread.sleep(2000);
         //verify that result appears for the provided journey search
         Assert.assertTrue(isElementPresent(By.className("searchSummary")));
 
@@ -76,14 +79,15 @@ public class FlightBookingTest {
     }
 
     private void setDriverPath() {
-        if (PlatformUtil.isMac()) {
+        if (Platform.isMac()) {
             System.setProperty("webdriver.chrome.driver", "chromedriver");
         }
-        if (PlatformUtil.isWindows()) {
-            System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
+        if (Platform.isWindows()) {
+            System.setProperty("webdriver.chrome.driver", "D:\\\\Ashok-Data\\\\Ashok\\\\Data\\\\Testing\\\\chromedriver_win32\\\\chromedriver.exe");
         }
-        if (PlatformUtil.isLinux()) {
+        if (Platform.isLinux()) {
             System.setProperty("webdriver.chrome.driver", "chromedriver_linux");
         }
     }
+
 }
