@@ -32,7 +32,6 @@ public class SignInTest {
 		WebElement signElement = driver.findElement(By.id("signInButton"));
 		signElement.click();
 		Thread.sleep(5000);
-		String errorMsg = driver.findElement(By.xpath("//*[@id=\"errors1\"]")).getText();
 		String errors1 = driver.findElement(By.id("errors1")).getText();
         Assert.assertTrue(errors1.contains("There were errors in your submission"));
         driver.quit();
